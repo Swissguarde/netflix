@@ -14,8 +14,43 @@
   }
 }
 
+/* Custom classNames */
 @layer components {
   .headerLink {
-    @apply cursor-pointer text-sm font-light text-[#E5E5E5] transition duration-[0.4s] hover:text-[#B3B3B3];
+    @apply cursor-pointer text-sm font-light text-[#E5E5E5] transition duration-[.4s] hover:text-[#B3B3B3];
+  }
+  .bannerBtn {
+    @apply flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold transition hover:opacity-75 md:py-2.5 md:px-8 md:text-xl;
+  }
+  .rowIcon {
+    @apply absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100;
+  }
+  .rowIconB {
+    @apply absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100;
+  }
+  .input {
+    @apply w-full rounded bg-[#333] px-5 py-3.5 placeholder-[gray] outline-none focus:bg-[#454545];
+  }
+  .modalButton {
+    @apply flex h-11 w-11 items-center justify-center rounded-full border-2 border-[gray] bg-[#2a2a2a]/60 transition hover:border-white hover:bg-white/10;
+  }
+  .planContainer {
+    @apply relative mx-1.5 flex h-20 w-[calc(100%/3)] cursor-default items-center justify-center rounded-sm bg-[#E50914] font-semibold shadow after:absolute after:top-full after:left-1/2 after:block after:translate-x-1/2 after:border-8 after:border-b-0 after:border-transparent after:border-t-[#E50914] after:content-[""] md:h-32 lg:mx-8;
+  }
+  /* MUI Menu */
+  .menu {
+    @apply md:hidden;
+  }
+
+  .menu .MuiPaper-root {
+    @apply !absolute !left-0 !rounded-none !border !border-[gray] !bg-black !text-white;
+  }
+
+  .menu .MuiList-root {
+    @apply !p-0;
+  }
+
+  .menu .MuiMenuItem-root {
+    @apply !block !w-72 !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200 first:cursor-default first:!font-normal first:!text-white hover:!bg-[#11100F];
   }
 }
