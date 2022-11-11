@@ -6,7 +6,7 @@
 /* HTML, body */
 @layer base {
   body {
-    @apply bg-[#141414] text-white;
+    @apply bg-[#141414] text-white !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-red-600;
     font-family: "Work Sans", sans-serif;
   }
   header {
