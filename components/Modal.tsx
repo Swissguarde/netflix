@@ -1,6 +1,6 @@
 import MuiModal from "@mui/material/Modal";
-import { useRecoilState } from "recoil";
-import { modalState, movieState } from "../atoms/modalAtoms";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal } from "../redux/modalSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { Element, Genre, Movie } from "../typings";
@@ -8,9 +8,12 @@ import ReactPlayer from "react-player/lazy";
 import { FaPlay, FaPlus } from "react-icons/fa";
 import { FiThumbsUp } from "react-icons/fi";
 import { BsFillMicFill, BsFillMicMuteFill } from "react-icons/bs";
+import { selectMovie } from "../redux/movieSlice";
+
 const Modal = () => {
-  const [showModal, setShowModal] = useRecoilState(modalState);
-  const [movie, setMovie] = useRecoilState(movieState);
+  const dispatch = useDispatch();
+  const movieState = useSelector(selectMovie);
+  const { movie } = movieState;
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
   const [muted, setMuted] = useState(false);
@@ -50,11 +53,11 @@ const Modal = () => {
     fetchMovie();
   }, [movie]);
   const handleClose = () => {
-    setShowModal(false);
+    dispatch(toggleModal());
   };
   return (
     <MuiModal
-      open={showModal}
+      open
       onClose={handleClose}
       className="fixed !top-10 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide"
     >
