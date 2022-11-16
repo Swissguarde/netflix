@@ -7,6 +7,7 @@ import { Movie } from "../typings";
 import requests from "../utils/requests";
 import { selectModalState } from "../redux/modalSlice";
 import { useSelector } from "react-redux";
+import useAuth from "../hooks/useAuth";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -31,6 +32,11 @@ export default function Home({
 }: Props) {
   const modalState = useSelector(selectModalState);
   const { isOpen } = modalState;
+
+  const { loading } = useAuth();
+
+  if (loading) return null;
+
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
       <Head>
