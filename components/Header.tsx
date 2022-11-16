@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { HiSearch, HiBell } from "react-icons/hi";
 import useAuth from "../hooks/useAuth";
+import BasicMenu from "./Menu";
 
 const Header = () => {
   const [scroll, setScroll] = useState(false);
@@ -32,6 +33,8 @@ const Header = () => {
           height={100}
           className="cursor-pointer object-contain"
         />
+
+        <BasicMenu />
 
         <ul className="hidden space-x-4 md:flex">
           <li className="headerLink">Home</li>
