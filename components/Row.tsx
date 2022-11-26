@@ -3,9 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { Movie } from "../typings";
 import Thumbnail from "./Thumbnail";
-import { db } from "../firebase.config";
-import useAuth from "../hooks/useAuth";
-import { doc, onSnapshot } from "firebase/firestore";
 
 interface Props {
   title: string;
@@ -15,7 +12,6 @@ interface Props {
 const Row = ({ title, movies }: Props) => {
   const rowRef = useRef<HTMLDivElement>(null);
   const [isScroll, setIsScroll] = useState<boolean>(false);
-  const [show, setShow] = useState([]);
 
   const handleClick = (direction: string) => {
     setIsScroll(true);
@@ -29,13 +25,6 @@ const Row = ({ title, movies }: Props) => {
       rowRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
     }
   };
-  const { user } = useAuth();
-
-  useEffect(() => {
-    onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
-      setShow(doc.data()?.savedMovies);
-    });
-  }, []);
 
   return (
     <div className="h-40 space-y-0.5 md:space-y-2">

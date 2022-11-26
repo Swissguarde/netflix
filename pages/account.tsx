@@ -4,7 +4,7 @@ import Membership from "../components/Membership";
 import useAuth from "../hooks/useAuth";
 
 function Account() {
-  const { user, logout, loading } = useAuth();
+  const { logout, loading } = useAuth();
 
   if (loading) return null;
 
@@ -20,13 +20,14 @@ function Account() {
             src="https://rb.gy/ulxxee"
             width={120}
             height={120}
+            alt="logo"
             className="cursor-pointer object-contain"
           />
         </Link>
         <Link href="/account">
           <img
             src="https://rb.gy/g1pwyx"
-            alt=""
+            alt="account"
             className="cursor-pointer rounded"
           />
         </Link>
@@ -35,7 +36,7 @@ function Account() {
         <div className="flex flex-col gap-x-4 md:flex-row md:items-center">
           <h1 className="text-3xl md:text-4xl">Account</h1>
           <div className="-ml-0.5 flex items-center gap-x-1.5">
-            <img src="https://rb.gy/4vfk4r" alt="" className="h-7 w-7" />
+            <img src="https://rb.gy/4vfk4r" alt="acc" className="h-7 w-7" />
             <p className="text-xs font-semibold text-[#555]">
               Member since 2022
             </p>

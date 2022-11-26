@@ -73,14 +73,14 @@ const Modal = () => {
         setShow(doc.data()?.savedMovies);
       });
     }
-  }, [db, movie?.id]);
+  }, [movie?.id, user]);
 
   useEffect(
     () =>
       setAddedToList(
         show.findIndex((result) => result.id === movie?.id) !== -1
       ),
-    [show]
+    [show, movie?.id]
   );
 
   const handleClose = () => {
