@@ -8,6 +8,9 @@ import requests from "../utils/requests";
 import { selectModalState } from "../redux/modalSlice";
 import { useSelector } from "react-redux";
 import useAuth from "../hooks/useAuth";
+import { db } from "../firebase.config";
+import { doc, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -33,9 +36,15 @@ export default function Home({
   const modalState = useSelector(selectModalState);
   const { isOpen } = modalState;
 
-  const { loading } = useAuth();
+  const { loading, user } = useAuth();
 
   if (loading) return null;
+  const [show, setShow] = useState([]);
+  useEffect(() => {
+    onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
+      setShow(doc.data()?.savedMovies);
+    });
+  }, []);
 
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 to-[#010511] lg:h-[140vh]">
@@ -54,6 +63,7 @@ export default function Home({
           <Row title="Trending Now" movies={trendingNow} />
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
+          {show.length !== 0 && <Row title="My List" movies={show} />}
 
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Horror" movies={horrorMovies} />

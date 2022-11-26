@@ -3,10 +3,10 @@ import { Movie } from "../typings";
 import { useDispatch } from "react-redux";
 import { toggleModal } from "../redux/modalSlice";
 import { storeMovie } from "../redux/movieSlice";
+import { DocumentData } from "firebase/firestore";
 
 interface Props {
-  // movie: Movie | DocumentData
-  movie: Movie;
+  movie: Movie | DocumentData;
 }
 const Thumbnail = ({ movie }: Props) => {
   const dispatch = useDispatch();

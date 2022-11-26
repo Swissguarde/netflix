@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import modalReducer from "./modalSlice";
 import movieReducer from "./movieSlice";
+
 export const store = configureStore({
   reducer: {
     modal: modalReducer,

@@ -1,7 +1,7 @@
 import MuiModal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../redux/modalSlice";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { Element, Genre, Movie } from "../typings";
 import ReactPlayer from "react-player/lazy";
@@ -9,6 +9,16 @@ import { FaPlay, FaPlus } from "react-icons/fa";
 import { FiThumbsUp } from "react-icons/fi";
 import { BsFillMicFill, BsFillMicMuteFill } from "react-icons/bs";
 import { selectMovie } from "../redux/movieSlice";
+import { db } from "../firebase.config";
+import useAuth from "../hooks/useAuth";
+import {
+  updateDoc,
+  doc,
+  onSnapshot,
+  arrayUnion,
+  DocumentData,
+} from "firebase/firestore";
+import toast, { Toaster } from "react-hot-toast";
 
 const Modal = () => {
   const dispatch = useDispatch();
@@ -17,6 +27,10 @@ const Modal = () => {
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
   const [muted, setMuted] = useState(false);
+  const [show, setShow] = useState<DocumentData[] | Movie[]>([]);
+  const [addedToList, setAddedToList] = useState(false);
+  const { user } = useAuth();
+  const movieID = doc(db, "users", `${user?.email}`);
 
   const truncateString = (str: string | undefined, num: number) => {
     if (str !== undefined) {
@@ -52,9 +66,67 @@ const Modal = () => {
 
     fetchMovie();
   }, [movie]);
+
+  useEffect(() => {
+    if (user) {
+      return onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
+        setShow(doc.data()?.savedMovies);
+      });
+    }
+  }, [db, movie?.id]);
+
+  useEffect(
+    () =>
+      setAddedToList(
+        show.findIndex((result) => result.id === movie?.id) !== -1
+      ),
+    [show]
+  );
+
   const handleClose = () => {
     dispatch(toggleModal());
   };
+  const movieRef = doc(db, "users", `${user?.email}`);
+
+  const toastStyle = {
+    background: "white",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "16px",
+    padding: "15px",
+    borderRadius: "9999px",
+    maxWidth: "1000px",
+  };
+
+  const handleList = async (id: number) => {
+    if (addedToList) {
+      const result = show.filter((item) => item.id !== id);
+      await updateDoc(movieRef, {
+        savedMovies: result,
+      });
+      toast(
+        `${movie?.title || movie?.original_name} has been removed from My List`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      );
+    } else {
+      await updateDoc(movieID, {
+        savedMovies: arrayUnion({
+          ...movie,
+        }),
+      });
+      toast(
+        `${movie?.title || movie?.original_name} has been added to My List.`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      );
+    }
+  };
+
   return (
     <MuiModal
       open
@@ -62,6 +134,7 @@ const Modal = () => {
       className="fixed !top-10 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide"
     >
       <>
+        <Toaster position="bottom-center" />
         <button
           onClick={handleClose}
           className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818] hover:bg-[#181818]"
@@ -84,8 +157,18 @@ const Modal = () => {
                 Play
               </button>
 
-              <button className="modalButton">
-                <FaPlus />
+              <button
+                onClick={() => handleList(movie?.id)}
+                // className={`${saved ? "modalButtonActive" : "modalButton"}`}
+                className={`${
+                  addedToList ? "modalButtonActive" : "modalButton"
+                }`}
+              >
+                {addedToList ? (
+                  <AiOutlineCheck className="h-7 w-7" />
+                ) : (
+                  <FaPlus className="h-7 w-7" />
+                )}
               </button>
               <button className="modalButton">
                 <FiThumbsUp className="h-6 w-6" />

@@ -6,7 +6,6 @@ import { HiInformationCircle } from "react-icons/hi";
 import { useDispatch } from "react-redux";
 import { toggleModal } from "../redux/modalSlice";
 import { storeMovie } from "../redux/movieSlice";
-
 interface Props {
   netflixOriginals: Movie[];
 }

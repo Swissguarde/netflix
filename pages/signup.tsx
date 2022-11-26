@@ -2,8 +2,9 @@ import Head from "next/head";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
-
+import { setDoc, doc } from "firebase/firestore";
 import useAuth from "../hooks/useAuth";
+import { db } from "../firebase.config";
 
 interface Inputs {
   email: string;
@@ -21,6 +22,9 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     await signUp(email, password);
+    await setDoc(doc(db, "users", email), {
+      savedMovies: [],
+    });
   };
   return (
     <div className="relative flex h-screen w-screen flex-col bg-black md:items-center md:justify-center md:bg-transparent">
