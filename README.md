@@ -27,11 +27,15 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.![Home-Netflix (2)](https://user-images.githubusercontent.com/88935495/204155579-803d02bc-8b40-4ae6-9294-76bc52745a20.png)
-![Home-Netflix (1)](https://user-images.githubusercontent.com/88935495/204155605-07bfc457-7136-4e85-a524-308fbd85fb82.png)
+to discuss what you would like to change.
 
 
 ## Images
+
+
+![Home-Netflix (2)](https://user-images.githubusercontent.com/88935495/204155579-803d02bc-8b40-4ae6-9294-76bc52745a20.png)
+![Home-Netflix (1)](https://user-images.githubusercontent.com/88935495/204155605-07bfc457-7136-4e85-a524-308fbd85fb82.png)
+
 
 ![Home-Netflix (4)](https://user-images.githubusercontent.com/88935495/204155514-dc57d157-876d-4d02-ab83-1ac80d96b91e.png)
 ![Home-Netflix (3)](https://user-images.githubusercontent.com/88935495/204155566-747ef113-e537-4425-bc1e-dfda68230c8a.png)
